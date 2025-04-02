@@ -4,7 +4,7 @@
 // #include "sink.hpp"
 // #include "logger.hpp"
 // #include "buffer.hpp"
-#include "logs/bitlog.h"
+#include "../logs/bitlog.h"
 #include <unistd.h>
 
 void test_log()
