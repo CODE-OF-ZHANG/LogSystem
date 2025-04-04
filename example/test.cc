@@ -7,34 +7,34 @@
 #include "../logs/bitlog.h"
 #include <unistd.h>
 
-void test_log()
-{
-    // zx::Logger::ptr logger = zx::LoggerManager::getInstance().getLogger("async_logger");
-    // logger->debug("%s", "测试日志...");
-    // logger->info("%s", "测试日志...");
-    // logger->warn("%s", "测试日志...");
-    // logger->error("%s", "测试日志...");
-    // logger->fatal("%s", "测试日志...");
+// void test_log()
+// {
+//     // zx::Logger::ptr logger = zx::LoggerManager::getInstance().getLogger("async_logger");
+//     // logger->debug("%s", "测试日志...");
+//     // logger->info("%s", "测试日志...");
+//     // logger->warn("%s", "测试日志...");
+//     // logger->error("%s", "测试日志...");
+//     // logger->fatal("%s", "测试日志...");
 
-    // size_t cursize = 0, count = 0;
-    // while (cursize < 1024 * 1024 * 10)
-    // {
-    //     logger->fatal("测试日志-%d", count++);
-    //     cursize += 20;
-    // }
+//     // size_t cursize = 0, count = 0;
+//     // while (cursize < 1024 * 1024 * 10)
+//     // {
+//     //     logger->fatal("测试日志-%d", count++);
+//     //     cursize += 20;
+//     // }
 
-    DEBUG("%s", "测试日志...");
-    INFO("%s", "测试日志...");
-    WARN("%s", "测试日志...");
-    ERROR("%s", "测试日志...");
-    FATAL("%s", "测试日志...");
+//     DEBUG("%s", "测试日志...");
+//     INFO("%s", "测试日志...");
+//     WARN("%s", "测试日志...");
+//     ERROR("%s", "测试日志...");
+//     FATAL("%s", "测试日志...");
 
-    size_t count = 0;
-    while (count < 50000)
-    {
-        FATAL("测试日志-%d", count++);
-    }
-}
+//     size_t count = 0;
+//     while (count < 50000)
+//     {
+//         FATAL("测试日志-%d", count++);
+//     }
+// }
 
 int main()
 {
@@ -96,7 +96,7 @@ int main()
     builder->buildSink<zx::StdoutSink>();
     builder->build();
 
-    test_log();
+    // test_log();
 
     // std::string logger_name = "sync_logger";
     // zx::LogLevel::value limit = zx::LogLevel::value::WARN;

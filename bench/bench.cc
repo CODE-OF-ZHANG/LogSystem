@@ -38,7 +38,7 @@ void bench(const std::string &logger_name, size_t thr_count, size_t msg_count, s
                                  }
                                  // 6. 线程函数内部结束计时
                                  auto end = std::chrono::high_resolution_clock::now();
-                                 auto cost = end - start;
+                                 std::chrono::duration<double> cost = end - start;
                                  cost_array[i] = cost.count();
                                  std::cout << "线程: " << i << ": " << "\t输出数量:"
                                            << msg_per_thr << ", 耗时: " << cost.count() << "s" << std::endl; });
@@ -54,9 +54,37 @@ void bench(const std::string &logger_name, size_t thr_count, size_t msg_count, s
     size_t msg_per_sec = msg_count / max_cost;
     size_t size_per_sec = (msg_count * msg_len) / (max_cost * 1024);
     // 8. 进行输出打印
-    std::cout << "每条输出日志数量: " << msg_per_sec << "条\n";
-    std::cout << "每秒输出日志大小: " << size_per_sec << "KB\n";
+    std::cout << "\t总耗时: " << max_cost << std::endl;
+    std::cout << "\t每条输出日志数量: " << msg_per_sec << "条\n";
+    std::cout << "\t每秒输出日志大小: " << size_per_sec << "KB\n";
 }
 
-void sync_bench();
-void async_bench();
+void sync_bench()
+{
+    std::unique_ptr<zx::LoggerBuilder> builder(new zx::GlobalLoggerBuilder());
+    builder->buildLoggerName("sync_logger");
+    builder->buildFormatter("%m%n");
+    builder->buildLoggerType(zx::LoggerType::LOGGER_SYNC);
+    builder->buildSink<zx::FileSink>("./logfile/sync.log");
+    builder->build();
+    bench("sync_logger", 1, 1, 100);
+}
+
+void async_bench()
+{
+    std::unique_ptr<zx::LoggerBuilder> builder(new zx::GlobalLoggerBuilder());
+    builder->buildLoggerName("async_logger");
+    builder->buildFormatter("%m%n");
+    builder->buildLoggerType(zx::LoggerType::LOGGER_ASYNC);
+    builder->buildEnableUnSafeAsync();
+    builder->buildSink<zx::FileSink>("./logfile/async.log");
+    builder->build();
+    bench("sync_logger", 1, 1, 100);
+}
+
+int main()
+{
+    sync_bench();
+    // async_bench();
+    return 0;
+}
